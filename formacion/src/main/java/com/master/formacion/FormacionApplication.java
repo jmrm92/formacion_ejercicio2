@@ -12,6 +12,11 @@ public class FormacionApplication {
 		SpringApplication.run(FormacionApplication.class, args);
 	}
 
+	/**
+	* Crea y devuelve una nueva instancia de la clase RestTemplate.
+	*
+	* @return   una nueva instancia de la clase RestTemplate
+	*/
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
