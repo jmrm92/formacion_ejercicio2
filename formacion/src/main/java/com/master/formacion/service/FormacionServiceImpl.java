@@ -31,11 +31,17 @@ public class FormacionServiceImpl implements FormacionService {
 
     @Override
     public void altaFormacion(Formacion formacion) {
-        Curso curso = new Curso();
-        curso.setDuracion(formacion.getAsignaturas()*10);
-        curso.setNombre(formacion.getCurso());
-        curso.setPrecio(formacion.getPrecio());
-        template.postForLocation(url, curso);
+        boolean cursoExiste = false;
+        List<Curso> cursos = Arrays.asList(template.getForObject(url, Curso[].class));
+        for (Curso curso : cursos) {
+            if (curso.getNombre().equals(formacion.getCurso())){
+                cursoExiste = true; 
+            }     
+        }
+        if (!cursoExiste) {
+                Curso curso = new Curso(0, formacion.getCurso(),formacion.getAsignaturas()*10, formacion.getPrecio());
+                template.postForLocation(url, curso);
+            }
     }
 
     public Formacion transformarCursoAFormacion(Curso curso){
